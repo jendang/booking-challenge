@@ -19,7 +19,7 @@ A valid booking consists of the following information:
 
 Unless specified as optional, all fields are required. When a field is not valid, the user should see per field what is wrong with the input upon submitting. 
 
-While the user is editing the form, the price is updated, by POST-ing the form contents to `localhost:9090/price`, and recieve a price in the resposne from the server. 
+While the user is editing the form, the price is updated, by POST-ing the form contents, in JSON, to `localhost:9090/price`. In response the server will send back a (random) price, which in turn should be displayed to the user.
 
 Upon submit, all the form data is validated, and POST-ed, as JSON, to `localhost:9090/book`, the location of the mock-backend server. 
 Finally, the user is shown a "Thank you"-message and the form is reset to its initial state. 
