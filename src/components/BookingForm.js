@@ -1,6 +1,4 @@
 import React from 'react'
-import Message from './Message'
-
 
 class BookingForm extends React.Component {
     state = {
