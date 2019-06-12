@@ -1,5 +1,6 @@
 import React from 'react'
 import Message from './Message'
+import { Link, Redirect } from 'react-router-dom'
 
 class BookingForm extends React.Component {
     state = {
@@ -11,7 +12,6 @@ class BookingForm extends React.Component {
         email: "",
         bookingStatus: false, 
     
-
     }
 
     onPassengerChange = (e) => {
@@ -38,6 +38,7 @@ class BookingForm extends React.Component {
         .then(response => response.json())
         .then(data => this.setState({ bookingStatus: true }))
         .catch(err => console.error(err))
+        e.currentTarget.reset()
     }
 
     handlePriceChange = (e) => {
@@ -65,12 +66,14 @@ class BookingForm extends React.Component {
     handleButtonSubmit = () => {
         if(this.state.bookingStatus){
             return <Message />
+            
         }
     }
 
 
     render(){
         const { price } = this.state
+        console.log(this.state)
         return (
             <div>
                 
@@ -166,7 +169,14 @@ class BookingForm extends React.Component {
                         <div className="field">
                             <label>Total price: { price }</label>
                         </div>
-                        <button className="ui green button" onClick={this.handleButtonSubmit}>Order</button>
+                        {this.state.bookingStatus 
+                        ? 
+                        <div>
+                            <button className="ui green button">Order</button>
+                            <h4>Thank you for booking with Taxi Electric!</h4>
+                        </div>
+                        : <button className="ui green button">Order</button>
+                        }
                         
                     </form>
                 </div>
