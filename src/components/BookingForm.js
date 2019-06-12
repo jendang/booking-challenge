@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Message from './Message'
 
 class BookingForm extends React.Component {
     state = {
@@ -60,6 +60,12 @@ class BookingForm extends React.Component {
         .then(data => this.setState({ price: data.price }))
         .catch(err => console.error(err))
 
+    }
+
+    handleButtonSubmit = () => {
+        if(this.state.bookingStatus){
+            return <Message />
+        }
     }
 
 
@@ -160,7 +166,7 @@ class BookingForm extends React.Component {
                         <div className="field">
                             <label>Total price: { price }</label>
                         </div>
-                        <button className="ui green button">Order</button>
+                        <button className="ui green button" onClick={this.handleButtonSubmit}>Order</button>
                         
                     </form>
                 </div>
