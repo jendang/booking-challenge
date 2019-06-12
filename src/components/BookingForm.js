@@ -2,23 +2,72 @@ import React from 'react'
 
 
 class BookingForm extends React.Component {
+    state = {
+        pickupAdd: "",
+        dropoffAdd: "",
+        price: "",
+        name: "",
+        phone: "",
+        email: "",
+        bookingStatus: false, 
+    
+
+    }
+
+    onChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    handleSubmitBooking = (e) => {
+        e.preventDefault()
+        fetch("http://localhost:9090/book", {
+            method: "post",
+            headers: {
+                "content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                pickupAdd: this.state.pickupAdd,
+                dropoffAdd: this.state.dropoffAdd,
+                name: this.state.name,
+                phone: this.state.phone,
+                email: this.state.email,
+            }),
+           
+        })
+        .then(response => response.json())
+        .then(data => this.setState({ bookingStatus: true }))
+        .catch(err => console.error(err))
+    }
+
+
     render(){
+        console.log(this.state)
         return (
             <div>
                 
                 <div>
                     <form type="submit" onSubmit={this.handleSubmitBooking} className="ui form">
-                        <h4 classNam="ui dividing header">Booking information</h4>
-                        {/* <div className="two fields"> */}
+                        <label>Booking information</label>
                             <div className="field">
                                 <label>Pickup Address * </label>
-                                <input type="text" placeholder="Address" required/>
+                                <input 
+                                    onChange={this.onChange} 
+                                    name="pickupAdd"
+                                    type="text" 
+                                    placeholder="Address" 
+                                    required
+                                />
                             </div>
                             <div className="field">
                                 <label>Dropoff Addresses * </label>
-                                <input type="text" placeholder="Adress" required/>
+                                <input 
+                                    onChange={this.onChange} 
+                                    name="dropoffAdd"
+                                    type="text" 
+                                    placeholder="Adress" 
+                                    required
+                                />
                             </div>
-                        {/* </div> */}
                         <div className="field">
                             <label>Stop Addresses</label>
                             <input type="text" placeholder="Address"/>
@@ -38,11 +87,11 @@ class BookingForm extends React.Component {
                             </div>
                         </div>
                         <div className="inline fields">
-                            <lavel>Please choose the taxi model!</lavel>
+                            <label>Please choose the taxi model!</label>
                             <div className="field">
                                 <div className="ui radio checkbox">
                                     <label>Nissan Leaf</label>
-                                    <input type="radio" checked="checked"/>
+                                    <input type="radio"/>
                                 </div>
                             </div>
                             <div className="field">
@@ -58,17 +107,36 @@ class BookingForm extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <h4 classNam="ui dividing header">Passenger Details</h4>
+                        <label>Passenger Details</label>
                         <div className="field">
-                            <input type="text" placeholder="Full name" required/>
+                            <input 
+                                onChange={this.onChange}
+                                name="name"
+                                type="text" 
+                                placeholder="Full name" 
+                                required
+                            />
                         </div>
                         <div className="field">
-                            <input type="number" placeholder="Phone number 06-xxx-xxxx" required/>
+                            <input 
+                                onChange={this.onChange}
+                                name="phone"
+                                type="number" 
+                                placeholder="Phone number 06-xxx-xxxx" 
+                                required
+                            />
                         </div>
                         <div className="field">
-                            <input type="email" placeholder="Email" />
+                            <input 
+                                onChange={this.onChange}
+                                name="email"
+                                type="email" 
+                                placeholder="Email" 
+                            />
                         </div>
-                        <h4 classNam="ui dividing header">Total Price: -</h4>
+                        <div className="field">
+                            <label>Total price: {this.state.price}</label>
+                        </div>
                         <button className="ui green button">Order</button>
                         
                     </form>
