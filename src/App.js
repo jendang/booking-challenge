@@ -1,12 +1,18 @@
 import React from 'react';
-
 import './style.scss';
+import BookingForm from './components/BookingForm';
+
 
 export class App extends React.Component {
 
     render() {
         return (
-            <h1>Your coding starts here</h1>
+            <div>
+                <h1 className="header">Taxi Electric Booking Requirements </h1>
+                <div className="content">
+                    <BookingForm />
+                </div>
+            </div>
         )
     }
 }

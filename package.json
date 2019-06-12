@@ -4,6 +4,7 @@
   "description": "Coding Challenge Taxi Electric: Booking Form",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server & open http://localhost:8081/",
     "build": "webpack -p --mode 'production' --optimize-minimize --config webpack.config.js",
     "dev": "run-s build dev:webpack-dev",
     "dev:webpack-dev": "webpack-dev-server --mode 'development' --config webpack.config.js",
@@ -12,8 +13,10 @@
   "author": "Roeland Oosterloo",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "react": "16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",

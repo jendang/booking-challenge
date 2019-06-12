@@ -1,9 +1,12 @@
-var express = require('express');
+const express = require('express');
+const cors = require('cors')
+
 
 const app = express();
+app.use(cors())
 
 app.post('/price', (req, res) => {
-    const price = Math.random() * 200;
+    const price = Math.floor(Math.random() * 200);
     res.status(200).json({ status: 'OK', price });
 })
 
