@@ -14,7 +14,7 @@ class BookingForm extends React.Component {
 
     }
 
-    onChange = (e) => {
+    onPassengerChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
 
@@ -28,10 +28,11 @@ class BookingForm extends React.Component {
             body: JSON.stringify({
                 pickupAdd: this.state.pickupAdd,
                 dropoffAdd: this.state.dropoffAdd,
+                price: this.state.price,
                 name: this.state.name,
                 phone: this.state.phone,
                 email: this.state.email,
-            }),
+            })
            
         })
         .then(response => response.json())
@@ -39,9 +40,31 @@ class BookingForm extends React.Component {
         .catch(err => console.error(err))
     }
 
+    handlePriceChange = (e) => {
+        e.preventDefault()
+        this.setState({ 
+            pickupAdd: e.target.value ,
+            dropoffAdd: e.target.value
+        })
+        fetch("http://localhost:9090/price", {
+            method: "post",
+            headers: {
+                "content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                pickupAdd: this.state.pickupAdd,
+                dropoffAdd: this.state.dropoffAdd
+            })
+        })
+        .then(response => response.json())
+        .then(data => this.setState({ price: data.price }))
+        .catch(err => console.error(err))
+
+    }
+
 
     render(){
-        console.log(this.state)
+        const { price } = this.state
         return (
             <div>
                 
@@ -51,7 +74,7 @@ class BookingForm extends React.Component {
                             <div className="field">
                                 <label>Pickup Address * </label>
                                 <input 
-                                    onChange={this.onChange} 
+                                    onChange={this.handlePriceChange} 
                                     name="pickupAdd"
                                     type="text" 
                                     placeholder="Address" 
@@ -61,7 +84,7 @@ class BookingForm extends React.Component {
                             <div className="field">
                                 <label>Dropoff Addresses * </label>
                                 <input 
-                                    onChange={this.onChange} 
+                                    onChange={this.handlePriceChange} 
                                     name="dropoffAdd"
                                     type="text" 
                                     placeholder="Adress" 
@@ -110,7 +133,7 @@ class BookingForm extends React.Component {
                         <label>Passenger Details</label>
                         <div className="field">
                             <input 
-                                onChange={this.onChange}
+                                onChange={this.onPassengerChange}
                                 name="name"
                                 type="text" 
                                 placeholder="Full name" 
@@ -119,7 +142,7 @@ class BookingForm extends React.Component {
                         </div>
                         <div className="field">
                             <input 
-                                onChange={this.onChange}
+                                onChange={this.onPassengerChange}
                                 name="phone"
                                 type="number" 
                                 placeholder="Phone number 06-xxx-xxxx" 
@@ -128,14 +151,14 @@ class BookingForm extends React.Component {
                         </div>
                         <div className="field">
                             <input 
-                                onChange={this.onChange}
+                                onChange={this.onPassengerChange}
                                 name="email"
                                 type="email" 
                                 placeholder="Email" 
                             />
                         </div>
                         <div className="field">
-                            <label>Total price: {this.state.price}</label>
+                            <label>Total price: { price }</label>
                         </div>
                         <button className="ui green button">Order</button>
                         
